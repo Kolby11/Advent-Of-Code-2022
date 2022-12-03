@@ -1,7 +1,7 @@
 lines = open("Day 3\input.txt", "r").readlines()
 
 
-def readInput():
+def ProcessInput():
     rucksacks = []
     for line in lines:
         rucksack = ""
@@ -62,7 +62,7 @@ def FindMostCommonItemInThree(rucksacks):
 
 def Part1():
     commonItemPriority = []
-    rucksacks = readInput()
+    rucksacks = ProcessInput()
     splitRucksacks = SplitRucksacks(rucksacks)
     for compartment in splitRucksacks:
         commonItemPriority.append(GetItemPriority(FindCommonItem(compartment)))
@@ -72,7 +72,7 @@ def Part1():
 def Part2():
     elfGroups = []
     commonItemPriority = []
-    rucksacks = readInput()
+    rucksacks = ProcessInput()
     elfGroups = GetElfGroups(rucksacks)
     for group in elfGroups:
         commonItemPriority.append(GetItemPriority(FindMostCommonItemInThree(group)))
