@@ -1,6 +1,6 @@
 lines = open("Day 5\input.txt", "r").readlines()
 
-stacks = {}
+defaultStacks = {}
 commands = []
 
 
@@ -12,12 +12,12 @@ def ProcessInput():
             stackIndex = 1
             for index in range(1, len(line), 4):
                 if i == 0:
-                    stacks[stackIndex] = []
+                    defaultStacks[stackIndex] = []
                     if line[index] != " ":
-                        stacks[stackIndex].append(line[index])
+                        defaultStacks[stackIndex].append(line[index])
                 else:
                     if line[index] != " ":
-                        stacks[stackIndex].append(line[index])
+                        defaultStacks[stackIndex].append(line[index])
                 stackIndex += 1
         else:
             if i == len(lines) - 1:
@@ -28,22 +28,43 @@ def ProcessInput():
                 lastInt = splitLine[5][:-1]
                 command = {splitLine[0]: int(splitLine[1]), splitLine[2]: int(splitLine[3]), splitLine[4]: int(lastInt)}
                 commands.append(command)
+    commands.append(command)
 
 
-def Part1():
+def Part1(crates):
     answer = ""
     for command in commands:
         for crateIndex in range(command["move"]):
-            stacks[command["to"]].insert(0, stacks[command["from"]][0])
-            stacks[command["from"]].pop(0)
-    for stack in stacks.values():
-        if len(stack) > 0:
-            answer += stack[0]
+            crates[command["to"]].insert(0, crates[command["from"]][0])
+            crates[command["from"]].pop(0)
+    for crate in crates.values():
+        if len(crate) > 0:
+            answer += crate[0]
+        else:
+            answer += " "
+    return answer
+
+
+def Part2(crates):
+    answer = ""
+    for command in commands:
+        for crateIndex in range(command["move"]):
+            crates[command["to"]].insert(crateIndex, crates[command["from"]][0])
+            crates[command["from"]].pop(0)
+    for crate in crates.values():
+        if len(crate) > 0:
+            answer += crate[0]
         else:
             answer += " "
     return answer
 
 
 ProcessInput()
-print(Part1())
-# PTWLTDJ V
+print(Part1(defaultStacks))
+# PTWLTDJV
+
+defaultStacks = {}
+commands = []
+ProcessInput()
+print(Part2(defaultStacks))
+# WZMFVGGZP
